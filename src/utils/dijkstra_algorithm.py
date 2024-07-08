@@ -33,7 +33,7 @@ THE PRINCIPLE OF DIJKSTRA'S ALGORITHM:
     7. Repeat until all nodes are processed. Identify the destination node and its total traversal cost. Use the predecessor dictionary to trace back the path and construct the route.
 """
 import heapq
-
+from data_loader import data_nodes
 
 # Example of the Data:
 example = {
@@ -95,5 +95,5 @@ def organize_itinerary(organized_dict = {}, starting_node = str, final_node = st
   
 
 
-print(organize_path("A", example))
-print(organize_itinerary(organize_path("A", example), "A", "C"))
+print(organize_path("Rithala", data_nodes))
+print(organize_itinerary(organize_path("Rithala", data_nodes), "Rithala", "Kashmere Gate"))
