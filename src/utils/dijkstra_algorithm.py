@@ -34,6 +34,8 @@ THE PRINCIPLE OF DIJKSTRA'S ALGORITHM:
 """
 import heapq
 from data_loader import data_nodes
+import matplotlib.pyplot as plt
+import networkx as nx
 
 # Example of the Data:
 example = {
@@ -93,7 +95,31 @@ def organize_itinerary(organized_dict = {}, starting_node = str, final_node = st
 
     return itinerary
   
+def visualize_graph (dataset, itinerary):
+    G = nx.Graph()
+
+    for node, neighbors in dataset.items():
+        for neighbor, weight in neighbors.items():
+            G.add_edge(node, neighbor, weight=weight)
+
+    pos = nx.spring_layout(G)
+    edge_labels = nx.get_edge_attributes(G, 'weight')
+
+    plt.figure(figsize=(12, 8))
+    nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=500, font_size=10, font_weight='bold')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+
+    path_edges = list(zip(itinerary, itinerary[1:]))
+    nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='r', width=2)
+    nx.draw_networkx_nodes(G, pos, nodelist=itinerary, node_color='r', node_size=500)
+    
+    plt.title('Graph Visualization with Shortest Path Highlighted')
+    plt.show()
 
 
-print(organize_path("Rithala", data_nodes))
-print(organize_itinerary(organize_path("Rithala", data_nodes), "Rithala", "Kashmere Gate"))
+organized_dict = organize_path("Rithala", data_nodes)
+itinerary = organize_itinerary(organized_dict, "Rithala", "Kashmere Gate")
+print(organized_dict)
+print(itinerary)
+
+visualize_graph(data_nodes, itinerary)
