@@ -1,37 +1,7 @@
 import tkinter as tk
 from tkinter.ttk import Combobox
-import matplotlib.pyplot as plt
-import networkx as nx
 from data_loader import data_nodes
-from dijkstra_algorithm import organize_path, organize_itinerary
-
-# Função para visualizar o grafo
-
-
-def visualize_graph(dataset, itinerary):
-    G = nx.Graph()
-
-    for node, neighbors in dataset.items():
-        for neighbor, weight in neighbors.items():
-            G.add_edge(node, neighbor, weight=weight)
-
-    pos = nx.spring_layout(G)
-    edge_labels = nx.get_edge_attributes(G, 'weight')
-
-    plt.figure(figsize=(12, 8))
-    nx.draw(G, pos, with_labels=True, node_color='lightblue',
-            node_size=400, font_size=5, font_weight='bold')
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-
-    path_edges = list(zip(itinerary, itinerary[1:]))
-    nx.draw_networkx_edges(G, pos, edgelist=path_edges,
-                           edge_color='r', width=2)
-    nx.draw_networkx_nodes(G, pos, nodelist=itinerary,
-                           node_color='r', node_size=500)
-
-    plt.title('Visualização das linhas de metrô', size=15, color='darkblue')
-    plt.gcf().canvas.manager.set_window_title("Visualização das linhas de metrô")
-    plt.show()
+from dijkstra_algorithm import organize_path, organize_itinerary, visualize_graph
 
 # Função para quando o botão for pressionado
 
